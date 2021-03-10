@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.cg.apps.employeemswithoutjpa.beans.Employee;
+import com.cg.apps.employeemswithoutjpa.dto.ChangeEmployeeNameRequest;
+import com.cg.apps.employeemswithoutjpa.dto.CreateEmployeeRequest;
+import com.cg.apps.employeemswithoutjpa.dto.DeleteEmployeeRequest;
 import com.cg.apps.employeemswithoutjpa.dto.EmployeeDetails;
 import com.cg.apps.employeemswithoutjpa.service.IEmployeeService;
 import com.cg.apps.employeemswithoutjpa.util.EmployeeUtil;
@@ -35,21 +38,21 @@ public class EmployeeRestController {
     }
 
     @PostMapping("/add")
-    public String addStudent(@RequestBody Employee requestData) {
+    public String addStudent(@RequestBody CreateEmployeeRequest requestData) {
         Employee created = service.addEmployee(requestData.getName(),requestData.getSalary());
         return "created employee with id=" + created.getId();
     }
 
 
     @PutMapping("/changename")
-    public EmployeeDetails changeName(@RequestBody Employee employee) {
-        employee = service.updateName(employee.getId(), employee.getName());
+    public EmployeeDetails changeName(@RequestBody ChangeEmployeeNameRequest requestData) {
+        Employee employee = service.updateName(requestData.getId(), requestData.getName());
         EmployeeDetails emp=util.toDetails(employee);
         return emp;
     }
 
     @DeleteMapping("/delete")
-    public String delete(@RequestBody Employee employee){
+    public String delete(@RequestBody DeleteEmployeeRequest employee){
         service.deleteById(employee.getId());
         return "student deleted for id="+employee.getId();
     }
