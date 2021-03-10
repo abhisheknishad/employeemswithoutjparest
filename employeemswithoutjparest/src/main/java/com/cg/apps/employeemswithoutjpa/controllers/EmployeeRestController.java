@@ -38,7 +38,7 @@ public class EmployeeRestController {
     }
 
     @PostMapping("/add")
-    public String addStudent(@RequestBody CreateEmployeeRequest requestData) {
+    public String addEmployee(@RequestBody CreateEmployeeRequest requestData) {
         Employee created = service.addEmployee(requestData.getName(),requestData.getSalary());
         return "created employee with id=" + created.getId();
     }
